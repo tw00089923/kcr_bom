@@ -51,10 +51,12 @@ export default validate(merge(baseConfig, {
    */
   node: {
     __dirname: false,
-    __filename: false
+    __filename: false,
+      fs: 'empty'
   },
 
   externals: [
-    // 'source-map-support'
+  { './cptable': 'var cptable' },
+  {'./jszip': 'jszip'},'xlsx'
   ]
 }));

@@ -1,0 +1,144 @@
+.rightcontainter {
+
+	
+	text-align: left;
+	width:20%;
+	position: absolute;
+	top: 70px;
+	height: 80%;
+	margin-left: 5%;
+	font-size:25px;
+	// border-style: solid;
+
+}
+
+
+
+.containter li{
+	line-height: 40px;
+
+}
+
+
+.leftcontainer {
+	padding-left: 50px;
+	text-align: left;
+	width:60%;
+	position: absolute;
+	top: 70px;
+	height: 80%;
+	margin-left: 30%;
+	font-size:25px;
+	// border-style: solid;
+}
+
+.rightcontainter li:hover{
+	cursor: pointer;
+	color:gray;
+
+}
+
+
+
+.downbtn{
+	position:absolute;
+	right:0px;
+	color:blue;
+	font-size: 20px;
+	margin-top: -30px;
+
+}
+.div_left{
+
+	float: left;
+	width:20%;
+	margin-left:10%;
+	margin-top: 90px;
+
+	position: relative;
+
+}
+.div_left>li{
+
+	color: white;
+	cursor: pointer;
+	font-size: 20px;
+}
+.div_left>li:hover{
+
+	font-size: 25px;
+	color:#9F7800;
+}
+
+
+
+.div_right{
+	padding-top: 90px;
+	font-size: 18px;
+	width:70%;
+	float: right;
+	text-align: center;
+}
+.div_right>div>label{
+
+	width:100%;
+
+}
+
+.input_1{
+border-style:none;
+appearance:none;
+font-size: 20px;
+border-radius: 4px;
+width: 40px;
+overflow:hidden;
+position: relative;
+
+}
+.select{
+box-sizing: border-box;
+width:20%;
+position: relative;
+display: table-cell;
+
+}
+.select>select{
+
+height: 20px;
+width: 30%;
+
+}
+
+.option{
+
+width:10%;
+}
+
+
+
+
+.title{
+	width:100%;
+}
+
+.btn_save{
+	border-radius: 5px;
+	margin-right: 10%;
+	float:right;
+	background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+
+}
+
+
+.label_1{
+	padding-top:30px;
+	margin-left: 30%;
+	text-align: center;
+	font-size: 40px;
+}

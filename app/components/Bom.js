@@ -144,6 +144,7 @@ import Select from 'react-select';
 import react_select_css from 'react-select/dist/react-select.css';
 import XLSX from 'xlsx';
 
+
 export default class Bom extends React.Component {
 
   constructor(props) {
@@ -165,6 +166,7 @@ export default class Bom extends React.Component {
        this.onClick = this.onClick.bind(this);
        this.upload = this.upload.bind(this);
        this.save = this.save.bind(this);
+       this.local = this.local.bind(this);
   }
 upload(e){
       e.preventDefault();
@@ -177,13 +179,18 @@ upload(e){
     var name = f.name;
     reader.onload = function(e) {
       var data = e.target.result;
+     
+      const workbook = XLSX.read(data, {type: 'binary'});
+    
+        console.log(Object.assign(...workbook,workbook.Sheets.Sheet1.B3['v']= 'hi'));
+        console.log(workbook);
+        XLSX.writeFile(workbook, './app/excel/export/1.xlsx');
 
-      var workbook = XLSX.read(data, {type: 'binary'});
-      console.log(workbook);
-
+    
       /* DO SOMETHING WITH workbook HERE */
     };
     reader.readAsBinaryString(f);
+    
   }
 
 
@@ -193,6 +200,17 @@ upload(e){
     // var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
     // document.saveAs(blob, "hello world.txt");
   }
+local(){
+ var blob = new Blob(['1','2'], {type: 'text/csv'});
+ const a = document.createElement("a");
+ a.href = "";
+ a.setAttribute('download', 'das.csv');
+ a.setAttribute('target', '_blank');
+ a.click();
+console.log(window.URL.createObjectURL(blob));
+}
+
+
 
 save(){
 let header= `${this.state.index_1}${this.state.index_2}${this.state.index_3}`;
@@ -239,7 +257,10 @@ var ws_name = 'SheetJS';
 var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
 wb.SheetNames.push(ws_name);
 wb.Sheets[ws_name] = ws;
-XLSX.writeFile(wb, `./app/excel/export/${header}.xlsx`);
+ XLSX.writeFile(wb, `./app/excel/export/${header}.xlsx`);
+
+window.open(`./app/excel/export/${header}.xlsx`, 'Download');
+
 console.log(XLSX.writeFile(wb, 'test.xlsx'));
 }
 
@@ -453,7 +474,8 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
     var options = [
     { value: 'one', label: 'One' },
     { value: 'two', label: 'Two', clearableValue: false }
-];
+];  
+
 
     return (
       <div>
@@ -490,6 +512,7 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
             
           </div>
           <input type="file" onChange={this.upload}/>
+          <button className={style.btn_save} onClick={this.local}> start </button>
           <button className={style.btn_save} onClick={this.save}> Save </button>
         {this.state.index_1}{this.state.index_2}{this.state.index_3}{this.state.index_4}{this.state.index_5}{this.state.index_6}{this.state.index_7}{this.state.index_8}{this.state.index_9}{this.state.index_0}
       </div>

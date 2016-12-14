@@ -1,10 +1,12 @@
 export default [
-			{index:"01",color:"BLK",color_zh:"黑"},
-			{index:"02",color:"BWN",color_zh:"棕"},
-			{index:"03",color:"RED",color_zh:"紅"},
-			{index:"04",color:"ORG",color_zh:"橙"},
-			{index:"05",color:"YEL",color_zh:"黃"},
+			{index:"00",color:"BLK",color_zh:"黑"},
+			{index:"01",color:"BWN",color_zh:"棕"},
+			{index:"02",color:"RED",color_zh:"紅"},
+			{index:"03",color:"ORG",color_zh:"橙"},
+			{index:"04",color:"YEL",color_zh:"黃"},
+			{index:"05",color:"GRN",color_zh:"綠"},
 			{index:"06",color:"BLU",color_zh:"藍"},
+
 			{index:"07",color:"VIO",color_zh:"紫"},
 			{index:"08",color:"GRAY",color_zh:"灰"},
 			{index:"09",color:"WHT",color_zh:"白"},

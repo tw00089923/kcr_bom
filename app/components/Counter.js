@@ -14,6 +14,7 @@ class Counter extends Component {
 
   render() {
     const { increment, incrementIfOdd, incrementAsync, decrement, counter } = this.props;
+    console.log(this);
     return (
       <div>
         <div className={styles.backButton}>

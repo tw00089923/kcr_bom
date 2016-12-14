@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as ActionBom from '../actions/bom';
 function mapStateToProps(state) {
   return {
-  	work_bom : state.bom
+  	bom : state.bom
   };
 }
 function mapDispatchToProps(dispatch) {

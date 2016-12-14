@@ -150,23 +150,24 @@ export default class Bom extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
-      index_type:1,
-      index_1: 1,
-      index_2: 0,
-      index_3: 0,
-      index_4: 0,
-      index_5: 0,
-      index_6: 0,
-      index_7: 0,
-      index_8: 0,
-      index_9: 0,
-      index_0: 0
+      index_type:"1",
+      index_1: "1",
+      index_2: "0",
+      index_3: "0",
+      index_4: "0",
+      index_5: "0",
+      index_6: "0",
+      index_7: "0",
+      index_8: "0",
+      index_9: "0",
+      index_0: "0"
     };
        this.onChange = this.onChange.bind(this);
        this.onClick = this.onClick.bind(this);
        this.upload = this.upload.bind(this);
        this.save = this.save.bind(this);
        this.local = this.local.bind(this);
+       this.add = this.add.bind(this);
   }
 upload(e){
       e.preventDefault();
@@ -209,7 +210,12 @@ local(){
  a.click();
 console.log(window.URL.createObjectURL(blob));
 }
+add(){
+ 
+ this.props.add_bom(this.state.index_1+this.state.index_2+this.state.index_3+this.state.index_4+this.state.index_5+this.state.index_6+this.state.index_7+this.state.index_8+this.state.index_9);
+ console.log("ok");
 
+}
 
 
 save(){
@@ -285,6 +291,11 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
       
             this.setState({index_type:e.target.value});
        
+    }
+    if(e.target.name == "index_1_color"){
+      if (e.target.value){
+      this.setState({ index_6:e.target.value.substring(0,1),index_7:e.target.value.substring(1,2)});
+      }
     }
    
 
@@ -477,13 +488,14 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
 ];  
 
 
+    console.log(this);
     return (
       <div>
         <div >
          <Link to="/"> <i className="fa fa-arrow-left fa-3x" /> &nbsp; <i className="fa fa-home fa-3x" aria-hidden="true"></i> </Link>   
 
          <label className={style.label_1}> 材料編號準則 </label> 
-          <i className="fa fa-arrow-circle-down fa-3x" aria-hidden="true" style={{"float":"right" , "marginRight":"20px"}}> <span style={{"color":"white"}}>{this.state.number?"0":"1"}</span></i>
+          <i className="fa fa-arrow-circle-down fa-3x" aria-hidden="true" style={{"float":"right" , "marginRight":"20px"}}> <span style={{"color":"white"}}>{this.props.bom.length }</span></i>
         </div>
 
         <div className={style.div_left}>
@@ -512,6 +524,7 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
             
           </div>
           <input type="file" onChange={this.upload}/>
+          <button className={style.btn_save} onClick={this.add}> ADD </button>
           <button className={style.btn_save} onClick={this.local}> start </button>
           <button className={style.btn_save} onClick={this.save}> Save </button>
         {this.state.index_1}{this.state.index_2}{this.state.index_3}{this.state.index_4}{this.state.index_5}{this.state.index_6}{this.state.index_7}{this.state.index_8}{this.state.index_9}{this.state.index_0}

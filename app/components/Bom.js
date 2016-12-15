@@ -151,8 +151,8 @@ export default class Bom extends React.Component {
     super(props);
     this.state ={
       index_type:"1",
-      index_1: "1",
-      index_2: "0",
+      index_1: 1,
+      index_2: 0,
       index_3: "0",
       index_4: "0",
       index_5: "0",
@@ -297,6 +297,11 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
       this.setState({ index_6:e.target.value.substring(0,1),index_7:e.target.value.substring(1,2)});
       }
     }
+    if(e.target.name == "index_2"){
+      if (e.target.value){
+      this.setState({ index_3:e.target.value.substring(0,1),index_4:e.target.value.substring(1,2)});
+      }
+    }
    
 
   }
@@ -310,17 +315,17 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
     const material_header_li = _.map(["電線與電纜","漆包線與導線","絕緣材料","五金鐵材","塑膠化學","包裝與標示材料","電子元件","電子配件","半成品","成品"],(v,k)=>{
         return (<li  value={k+1} key={k} onClick={this.onClick}> {v} </li>);
     });
-    const index_type =({ index_10 :['標準模式整卷','標準模式切斷'], 
-                      index_20:['標準模式'],
-                      index_30:['標準模式'],
-                      index_40:['PT材料','PT配件','組立材料','鐵芯(素材)','鐵芯(裁切條料)'],
-                      index_50:['標準模式'],
-                      index_60:['標準模式'],
-                      index_70:['標準模式','種類代號000,001'],
-                      index_80:['標準模式'],
+    const index_type =({ index_1 :['標準模式整卷','標準模式切斷'], 
+                      index_2:['標準模式'],
+                      index_3:['標準模式'],
+                      index_4:['PT材料','PT配件','組立材料','鐵芯(素材)','鐵芯(裁切條料)'],
+                      index_5:['標準模式'],
+                      index_6:['標準模式'],
+                      index_7:['標準模式','種類代號000,001'],
+                      index_8:['標準模式'],
                       index_92:['標準模式(工程別)','標準模式(矽鋼片_條料)','標準模式(鐵芯,沖製品及未燒炖N品)','標準模式(鐵芯,沖製品及燒炖A品)','標準模式(CHRONOIII & PLR 機種)'],
                       index_90:['標準模式'],
-                        })[`index_${this.state.index_1}${this.state.index_2}`] || '預設值';
+                        })[this.state.index_1 > 8 ? `index_${this.state.index_1}${this.state.index_2}`:`index_${this.state.index_1}`] || '預設值';
     const index_type_index = _.map(index_type,(v,k)=>{
       return (<option value={k+1} key={k} > {v} </option>);
 

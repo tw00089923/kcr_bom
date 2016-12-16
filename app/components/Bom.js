@@ -219,12 +219,13 @@ add(){
 
 
 save(){
-let header= `${this.state.index_1}${this.state.index_2}${this.state.index_3}`;
-function datenum(v, date1904) {
-  if(date1904) v+=1462;
-  var epoch = Date.parse(v);
-  return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
-}
+
+  let header= `${this.state.index_1}${this.state.index_2}${this.state.index_3}`;
+  function datenum(v, date1904) {
+    if(date1904) v+=1462;
+    var epoch = Date.parse(v);
+    return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
+  }
 
 function sheet_from_array_of_arrays(data, opts) {
   var ws = {};
@@ -286,22 +287,51 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
   }
  
   onChange(e){
- 
+    let a = e.target.value;
+
     if(e.target.name == "index_type"){
       
             this.setState({index_type:e.target.value});
        
     }
     if(e.target.name == "index_1_color"){
-      if (e.target.value){
+      if (e.target.value>9){
       this.setState({ index_6:e.target.value.substring(0,1),index_7:e.target.value.substring(1,2)});
       }
     }
     if(e.target.name == "index_2"){
-      if (e.target.value){
-      this.setState({ index_3:e.target.value.substring(0,1),index_4:e.target.value.substring(1,2)});
+      if ( a < 9){
+      this.setState({ index_2:0,index_3:a});
+      }if( a > 10 ){
+        this.setState({ index_2:e.target.value.substring(0,1),index_3:e.target.value.substring(1,2) });
+      }if( a == 23){
+        this.setState({ index_2:7,index_3:0});
+      }if (a == 24) { 
+        this.setState({index_2:9,index_3:9});
       }
     }
+    if( e.target.name == "index_1_number"){
+      if (a.length = 2) {
+
+        this.setState({ index_4: a.substring(0,1) , index_5 : a.substring(1,2) });
+      }
+
+    }
+
+
+
+    if(e.target.name == " index_1_wire"){
+      if(a.length = 2){
+
+        this.setState({ index_8:a.substring(0,1),index_9:a.substring(1,2)});
+      }else{
+
+         this.setState({ index_8:a.substring(0,1),index_9:a.substring(1,2)});
+      }
+
+
+    }
+
    
 
   }
@@ -310,6 +340,18 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
     const material_header= _.map(["電線與電纜","漆包線與導線","絕緣材料","五金鐵材","塑膠化學","包裝與標示材料","電子元件","電子配件","半成品","成品"],(v,k)=>{
         return (<option value={k+1} key={k} className={style.option_1}> {v} </option>);
     });
+
+    const material_header_show = ({ index_1 :"電線與電纜", 
+                      index_2:"漆包線與導線",
+                      index_3:"絕緣材料",
+                      index_4:"五金鐵材",
+                      index_5:"塑膠化學",
+                      index_6:"包裝與標示材料",
+                      index_7:"電子元件",
+                      index_8:"電子配件",
+                      index_92:"半成品",
+                      index_90:"成品"
+                        })[this.state.index_1 > 8 ? `index_${this.state.index_1}${this.state.index_2}`:`index_${this.state.index_1}`] || '預設值';
 
 
     const material_header_li = _.map(["電線與電纜","漆包線與導線","絕緣材料","五金鐵材","塑膠化學","包裝與標示材料","電子元件","電子配件","半成品","成品"],(v,k)=>{
@@ -330,30 +372,30 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
       return (<option value={k+1} key={k} > {v} </option>);
 
     });
-    const index_b =({ index_10_1:['種類','號數','顏色(2碼)','流水編號(2碼)','檢查號'],
-                      index_10_2:['種類','號數','流水編號(4碼)','檢查號'],
-                      index_20_1:['種類','線徑','緣厚度與種類','顏色(1碼)','檢查號'],
-                      index_30_1:['種類','型態','厚度或直徑','流水編號(3碼)','檢查號'],
-                      index_40_1:['種類','鐵芯長','流水編號(3碼)','檢查號'],
-                      index_40_2:['種類','規格','處理','流水編號(3碼)','檢查號'],
-                      index_40_3:['種類','材質','處理','流水編號(3碼)','檢查號'],
-                      index_40_4:['種類','矽鋼板(素材)','厚度','流水編號(3碼)','檢查號'],
-                      index_40_5:['種類','矽鋼板(裁切條料)','厚度','流水編號(1碼)','檢查號'],
-                      index_50_1:['種類','材質','流水編號(4碼)','檢查號'],
-                      index_60_1:['種類','型式','流水編號(3碼)','檢查號'],
-                      index_70_1:['種類','規格','流水編號(3碼)','檢查號'],
-                      index_70_2:['種類','材質','流水編號(3碼)','檢查號'],
-                      index_80_1:['種類','規格','流水編號(3碼)','檢查號'],
+    const index_b =({ index_1_1:['種類','號數','顏色(2碼)','流水編號(2碼)','檢查號'],
+                      index_1_2:['種類','號數','流水編號(4碼)','檢查號'],
+                      index_2_1:['種類','線徑','緣厚度與種類','顏色(1碼)','檢查號'],
+                      index_3_1:['種類','型態','厚度或直徑','流水編號(3碼)','檢查號'],
+                      index_4_1:['種類','鐵芯長','流水編號(3碼)','檢查號'],
+                      index_4_2:['種類','規格','處理','流水編號(3碼)','檢查號'],
+                      index_4_3:['種類','材質','處理','流水編號(3碼)','檢查號'],
+                      index_4_4:['種類','矽鋼板(素材)','厚度','流水編號(3碼)','檢查號'],
+                      index_4_5:['種類','矽鋼板(裁切條料)','厚度','流水編號(1碼)','檢查號'],
+                      index_5_1:['種類','材質','流水編號(4碼)','檢查號'],
+                      index_6_1:['種類','型式','流水編號(3碼)','檢查號'],
+                      index_7_1:['種類','規格','流水編號(3碼)','檢查號'],
+                      index_7_2:['種類','材質','流水編號(3碼)','檢查號'],
+                      index_8_1:['種類','規格','流水編號(3碼)','檢查號'],
                       index_92_1:['工程別','機種簡稱','流水編號(4碼)','檢查號'],
                       index_92_2:['條料寬度','流水編號(2碼)','檢查號'],
                       index_92_3:['鐵芯長','流水編號(2碼)','檢查號'],
                       index_92_4:['鐵芯長','流水編號(4碼)','檢查號'],
                       index_92_5:['類別','流水編號(4碼)','檢查號'],
                       index_90_1:['類別','型式','流水編號(4碼)','檢查號']
-                    })[`index_${this.state.index_1}${this.state.index_2}_${this.state.index_type}`] || [''];
+                    })[this.state.index_1 > 8 ? `index_${this.state.index_1}${this.state.index_2}_${this.state.index_type}` : `index_${this.state.index_1}_${this.state.index_type}`] || [''];
 
-    const index_c = ({index_1_1_1:['UL1007','UL1015','UL1430','UL1431','UL1509','UL1672','UL1061','UL1180','UL1617','UL1331','UL1095','UL1533','UL1332','UL2464','UL3239','UL1185','UL2547','UL20267','UL2651','UL2678','UL1180','UL1569','PVC','其 他'],
-                      index_1_1_2:['UL1007','UL1015','UL1430','UL1431','UL1509','UL1672','UL1061','UL1180','UL1617','UL1331','UL1095','UL1533','UL1332','UL2464','UL3239','UL1185','UL2547','UL20267','UL2651','UL2678','UL1180','UL1569','PVC','其 他'],
+    const index_c = ({index_1_1_1:['UL1007','UL1015','UL1430','UL1431','UL1509','UL1672','UL1061','UL1180','UL1617','UL1331','UL1095','UL1533','UL1332','UL2464','UL3239','UL1185','UL2547','UL20267','UL2651','UL2678','UL1180','UL1569','UL3135','PVC','其 他'],
+                      index_1_1_2:['UL1007','UL1015','UL1430','UL1431','UL1509','UL1672','UL1061','UL1180','UL1617','UL1331','UL1095','UL1533','UL1332','UL2464','UL3239','UL1185','UL2547','UL20267','UL2651','UL2678','UL1180','UL1569','UL3135','PVC','其 他'],
                       index_2_1_1:['A.P.Tz WIRE/AIEIW-200','PEW(S.S) WIRE','UEW(D.D)WIRE','DD+NY WIRE','NEW(NYW) WIRE','SQ. WIRE','COPPER BRAIDED','TINNED WIRE','Ni-Cu WIRE','PVF','Ni-Cr WIRE','鍍錫銅包鋼線','NOMEX COPPER WIRE/LITZ','TRIPLE INSULATED WIRE','SUPERCONDUCTING WIRE','BRAIDED COPPER CABLE','O.F.C WIRE 無氧銅線','WIRE UEW','WIRE DD-F','SSF-NY','WIRE AL'],
                       index_3_1_1:['POLYESTER FILM TAPE (M-T)','PAPER TAPE (560F, 560S)','POLYIMIDE FILM TAPE','EPOXY TAPE (3M#10)','ACETATE CLOTH TAPE (3M#11,ACAT)','GLASS CLOTH TAPE (3M#27)(TUCK#51)','PROFORMED BUTYL TAPE','DOUBLE SURFACE TAPE','ADHESIVE & SEMI ADHESIVE TAPE','PROTECT TAPE','SINGLE COATED WITH FOAM TAPE','COMPOUND ADHESIVE TAPE','ALUMINUM FOIL TAPE (3M#)/COPPER TAPE','REINFORCED PET INSULATION TAPE','TAPE VINY ELECTRICAL','PTFE FILM TAPE','NOMEX PAPER','KRAFT PAPER, PAPER BB ','MYLAR','WHITE WAX PAPER','FIBER','UL TUBE','UN-UL TUBE','GLASS TUBE','WAX TUBE、INSUL. TUBE','HEAT SHRINKABLE TUBE','KRAFT TUBE','TEFLON TUBE','SILICON BARRIER','COTTON TAPE','NON-WOVEN FABRIC','SILICON RUBBER','SILICON TUBE','SILICON RUBBER COATED FIBERGLASS SLEEVING','SILICON VARNISHED GLASS SLEEVING','BEN-HAR ACRYL SLEEVING','END CHEEK','CLOTH','SUPER INSULATION','AL FOIL 鋁箔','PET 擴充編織'],
                       index_4_1_1:['矽鋼鐵芯','鎳鐵合金鐵芯','亞鐵鐵粉芯','鐵帶','鐵底','鐵蓋','鐵腳','鐵芯','銅圈','壓板','矽鋼'],
@@ -373,7 +415,7 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
 
 
     const index_c_index = _.map(index_c,(v,k)=>{
-      return ( <option value={k+1} key={k} className={style.option}> {v}</option>);
+      return ( <option value={k} key={k} className={style.option}> {v}</option>);
        } );
     const color_2_index = _.map(color_2,(v,k)=>{
         return (<option value={color_2[k].index} key={k} > {color_2[k].color}</option>);
@@ -448,14 +490,14 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
                    return (<div key={k}><label> {v} </label> <input type="number" key={k} maxLength="1" min="0" max="9"/> </div>);
             }
             if (v == '流水編號(2碼)' ) {
-                   return (<div key={k}><label> {v} </label> <input type="number" key={k} maxLength="2" min="0" max="99"/> </div>);
+                   return (<div key={k}><label> {v} </label> <input type="number" name="index_1_wire" key={k} maxLength="2" min="0" max="99" onChange={this.onChange} /> </div>);
             }if (v == '流水編號(3碼)' ) {
                    return (<div key={k}><label> {v} </label> <input type="number" key={k} maxLength="3" min="0" max="999"/> </div>);
             }if (v == '流水編號(4碼)' ) {
                    return (<div key={k}><label> {v} </label> <input type="number" key={k} maxLength="4" min="0" max="99"/> </div>);
             }
             if (v == '號數' ) {
-                   return (<div key={k}><label> {v} </label> <input type="number" min="1" max="99" key={k}/> </div>);
+                   return (<div key={k}><label> {v} </label> <input name="index_1_number" onchange={this.onChange} name="" type="number" min="1" max="99" key={k}/> </div>);
             }
             if (v == '檢查號' ) {
                    return (<div key={k}><label> {v} </label> <input type="number" key={k} value="0" min="0" max="9"/> </div>);
@@ -472,7 +514,7 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
             }if(v == '線徑' ){
               return (<div><label> {v} </label> <input className={style.input_1} type="number" min="0" max="9999" key={k}/></div>);
             }if(v == '緣厚度與種類' ){
-              return (<div><label> {v} </label> <select name="" id=""> {width_2_index} </select></div>);
+              return (<div><label> {v} </label> <select name="" id="" onChange={this.onChange}> {width_2_index} </select></div>);
             }if(v == '型態' ){
               return (<div><label> {v} </label> <select name="" id=""> {_.map( ['整卷','整卷沖孔','切斷','切斷衝製'],(v,k)=>{ return (<option value={k} key={k}>{v}</option>)})} </select></div>);
             }if(v == '厚度或直徑' ){
@@ -487,10 +529,7 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
               }
             });
 
-    var options = [
-    { value: 'one', label: 'One' },
-    { value: 'two', label: 'Two', clearableValue: false }
-];  
+
 
 
     console.log(this);
@@ -500,7 +539,7 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
          <Link to="/"> <i className="fa fa-arrow-left fa-3x" /> &nbsp; <i className="fa fa-home fa-3x" aria-hidden="true"></i> </Link>   
 
          <label className={style.label_1}> 材料編號準則 </label> 
-          <i className="fa fa-arrow-circle-down fa-3x" aria-hidden="true" style={{"float":"right" , "marginRight":"20px"}}> <span style={{"color":"white"}}>{this.props.bom.length }</span></i>
+          <i className="fa fa-arrow-circle-down fa-3x" aria-hidden="true" style={{"float":"right" , "marginRight":"20px"}}> <span style={{"color":"white"}}>{this.props.bom.length} <li className={style.bom_list}>1</li> <li className={style.bom_list}> 2</li> </span> </i>
         </div>
 
         <div className={style.div_left}>
@@ -515,15 +554,15 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
 
           
 
-             
+           <div className={style.material_header}>  {material_header_show} &nbsp; &nbsp; 
             
            
            <select name="index_type" id="" onChange={this.onChange} className={style.select} > {index_type_index}</select>
-           
+           </div> 
           </div>
 
           <div>
-          
+            
               {map_index}
             
             

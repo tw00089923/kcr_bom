@@ -151,16 +151,17 @@ export default class Bom extends React.Component {
     super(props);
     this.state ={
       index_type:"1",
+      index_3_1:0,
       index_1: 1,
       index_2: 0,
-      index_3: "0",
-      index_4: "0",
-      index_5: "0",
-      index_6: "0",
-      index_7: "0",
-      index_8: "0",
-      index_9: "0",
-      index_0: "0"
+      index_3: 0,
+      index_4: 0,
+      index_5: 0,
+      index_6: 0,
+      index_7: 0,
+      index_8: 0,
+      index_9: 0,
+      index_0: 0
     };
        this.onChange = this.onChange.bind(this);
        this.onClick = this.onClick.bind(this);
@@ -211,9 +212,9 @@ local(){
 console.log(window.URL.createObjectURL(blob));
 }
 add(){
- 
- this.props.add_bom(this.state.index_1+this.state.index_2+this.state.index_3+this.state.index_4+this.state.index_5+this.state.index_6+this.state.index_7+this.state.index_8+this.state.index_9);
- console.log("ok");
+ let a = this.state.index_1.toString()+this.state.index_2.toString()+this.state.index_3.toString()+this.state.index_4.toString()+this.state.index_5.toString()+this.state.index_6.toString()+this.state.index_7.toString()+this.state.index_8.toString()+this.state.index_9.toString()+this.state.index_0.toString();
+ this.props.add_bom(a);
+ console.log(a);
 
 }
 
@@ -272,15 +273,27 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
 }
 
   onClick(e){
+    let  a = e.target.value;
+    let b ={};
+    for (var i = 3; i <= 9; i++) {
+    
+      b[`index_${i}`] = 0;   
+    }
+    let c =  Object.assign(b,{index_0:0});
 
-      if(e.target.value < 9 ){
-          this.setState({index_1:e.target.value,index_2:0,index_type:1}); 
+      if(a < 9 ){
+          // this.setState({index_1:a,index_2:0,index_type:1 ,index_3:0,index_4:0}); 
+          this.setState(Object.assign({index_1:a,index_2:0,index_type:1}, c)) ;
         }
-      if(e.target.value == 9 ){
-          this.setState({index_1:e.target.value ,index_2:2});
+      if(a == 9 ){
+          // this.setState({index_1:a ,index_2:2});
+          this.setState(Object.assign({index_1:a,index_2:2}, c)) ;
         }
-      if(e.target.value == 10){
-          this.setState({index_1:9,index_2:0,index_type:1});
+      if(a == 10){
+
+          // this.setState({index_1:9,index_2:0,index_type:1});
+
+           this.setState(Object.assign({index_1:9,index_2:0,index_type:1}, c)) ;
         }
     
 
@@ -297,8 +310,17 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
     if(e.target.name == "index_1_color"){
       if (e.target.value>9){
       this.setState({ index_6:e.target.value.substring(0,1),index_7:e.target.value.substring(1,2)});
+      }else{
+        this.setState({inde_6:0,index_7:a.substring(1,2)});
       }
     }
+    if(e.target.name == "index_2_color"){
+      if (e.target.value < 10){
+      this.setState({ index_9 : a });
+      }
+    }
+
+
     if(e.target.name == "index_2"){
       if ( a < 9){
       this.setState({ index_2:0,index_3:a});
@@ -311,29 +333,50 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
       }
     }
     if( e.target.name == "index_1_number"){
-      if (a.length = 2) {
-
-        this.setState({ index_4: a.substring(0,1) , index_5 : a.substring(1,2) });
+      if (a < 100 ) {
+     
+        this.setState({ index_4: parseInt(a/10) , index_5 : a%10 });
       }
 
     }
 
 
 
-    if(e.target.name == " index_1_wire"){
-      if(a.length = 2){
+    if(e.target.name == "index_1_wire"){
+      if(parseInt(a) < 100 ){
 
-        this.setState({ index_8:a.substring(0,1),index_9:a.substring(1,2)});
-      }else{
-
-         this.setState({ index_8:a.substring(0,1),index_9:a.substring(1,2)});
+       this.setState({ index_8 : parseInt(a/10),index_9: parseInt(a)%10});
       }
+    }
+    if( e.target.name == "four_number"){
 
-
+      if(parseInt(a)<10000){
+        this.setState({ index_6: parseInt(a/1000),index_7: parseInt(a%1000/100),index_8:parseInt(a%1000%100/10),index_9:parseInt(a)%10 })
+      }
     }
 
-   
+    //  （2) 線徑
+    if( e.target.name == "wire_thin_4"){
 
+      if(parseInt(a)<10000){
+     this.setState({ index_4: parseInt(a/1000),index_5: parseInt(a%1000/100),index_6:parseInt(a%1000%100/10),index_7:parseInt(a)%10 })
+        }else{
+          this.setState({index_4:0,index_5:0,index_6:0,index_7:0});
+        }
+    }
+    if( e.target.name == "index_2_thin"){
+      this.setState({index_8 : a });
+    }
+    // (3)
+   if( e.target.name == "index_3_title"){
+    this.setState({index_3_1 : parseInt(a) });
+   }
+   if(e.target.name == "index_3_56"){
+    this.setState({index_5: parseInt(a/10),index_6:a%10 });
+   }
+   if( e.target.name =="index_3_4"){
+            this.setState({ index_4:a });
+          }
   }
 
   render() {
@@ -412,8 +455,14 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
 
                      })[`index_${this.state.index_1}_1_${this.state.index_type}`] || ['1'];
 
+    const index_3_56 = ({ index_0:['1mil(0.025mm)','2mil(0.05mm)','3mil(0.08mm)','4mil(0.10mm)','5mil(0.13mm)','6mil(0.15mm)','7mil(0.18mm)','8mil(0.20mm)','9mil(0.23mm)','10mil(0.25mm)','11mil(0.28mm)','12mil(0.3mm)','以此類推','其他'],
+                          index_1:['0.4mm','0.5mm','0.8mm','0.85mm','1.0mm','1.5mm','2.0mm','2.5mm','3.0mm','3.5mm','3.7mm','4.0mm','5.0mm','5.2mm','6.0mm','6.5mm','8.2mm','9.5mm','10.0mm','12.5mm','18.0mm','19.0mm','7.0mm','1.35mm','6.35mm','6.20mm','X/8mm','X/16mm','8.0mm','15.0mm','12.0mm','0.1-0.99mm','1.01-1.999mm','12.7mm','2.69mm','14mm','25.4mm','11mm','13.5mm','38.1mm','35mm','16mm','20mm','50.8mm','63.5mm','30mm','17mm','70mm','1.6mm','其他mm']
 
+      })[`index_${this.state.index_3_1}`] || [1,2];
+    const index_3_56_head = _.map(index_3_56 ,(v,k)=>{
 
+        return (<option value={k} key={k}>{v}</option> );
+    });
     const index_c_index = _.map(index_c,(v,k)=>{
       return ( <option value={k} key={k} className={style.option}> {v}</option>);
        } );
@@ -490,14 +539,14 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
                    return (<div key={k}><label> {v} </label> <input type="number" key={k} maxLength="1" min="0" max="9"/> </div>);
             }
             if (v == '流水編號(2碼)' ) {
-                   return (<div key={k}><label> {v} </label> <input type="number" name="index_1_wire" key={k} maxLength="2" min="0" max="99" onChange={this.onChange} /> </div>);
+                   return (<div key={k}><label> {v} </label> <input type="number" name="index_1_wire"  key={k} maxLength="2" min="0" max="99" onChange={this.onChange} /> </div>);
             }if (v == '流水編號(3碼)' ) {
                    return (<div key={k}><label> {v} </label> <input type="number" key={k} maxLength="3" min="0" max="999"/> </div>);
             }if (v == '流水編號(4碼)' ) {
-                   return (<div key={k}><label> {v} </label> <input type="number" key={k} maxLength="4" min="0" max="99"/> </div>);
+                   return (<div key={k}><label> {v} </label> <input type="number" name="four_number" key={k} maxLength="4" min="0" onChange={this.onChange} max="9999"/> </div>);
             }
             if (v == '號數' ) {
-                   return (<div key={k}><label> {v} </label> <input name="index_1_number" onchange={this.onChange} name="" type="number" min="1" max="99" key={k}/> </div>);
+                   return (<div key={k}><label> {v} </label> <input name="index_1_number" onChange={this.onChange} type="number" min="1" max="99" key={k}/> </div>);
             }
             if (v == '檢查號' ) {
                    return (<div key={k}><label> {v} </label> <input type="number" key={k} value="0" min="0" max="9"/> </div>);
@@ -510,15 +559,18 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
             }if(v == '顏色(2碼)' ){
               return (<div className={style.select}>{v} <select name="index_1_color" id=""  onChange={this.onChange} key={k}  > {color_2_index} </select> </div>);
             }if(v == '顏色(1碼)' ){
-              return (<div>{v} <select name="index_1_color" id="" onChange={this.onChange} key={k}> {color_1_index} </select> </div>);
+              return (<div>{v} <select name="index_2_color" id="" onChange={this.onChange} key={k}> {color_1_index} </select> </div>);
             }if(v == '線徑' ){
-              return (<div><label> {v} </label> <input className={style.input_1} type="number" min="0" max="9999" key={k}/></div>);
+              return (<div><label> {v} </label> <input name="wire_thin_4" type="number" min="1" max="9999" maxLength="4" onChange={this.onChange} key={k}/></div>);
             }if(v == '緣厚度與種類' ){
-              return (<div><label> {v} </label> <select name="" id="" onChange={this.onChange}> {width_2_index} </select></div>);
+              return (<div><label> {v} </label> <select name="index_2_thin" id="" onChange={this.onChange}> {width_2_index} </select></div>);
             }if(v == '型態' ){
-              return (<div><label> {v} </label> <select name="" id=""> {_.map( ['整卷','整卷沖孔','切斷','切斷衝製'],(v,k)=>{ return (<option value={k} key={k}>{v}</option>)})} </select></div>);
+              return (<div><label> {v} </label> <select onChange={this.onChange} name="index_3_4" id=""> {_.map( ['整卷','整卷沖孔','切斷','切斷衝製'],(v,k)=>{ return (<option value={k} key={k}>{v}</option>)})} </select></div>);
             }if(v == '厚度或直徑' ){
-              return (<div><label> {v} <select name="" ><option value="">厚度</option><option value="">直徑</option> </select>  </label></div>);
+              return (<div><label> {v} <select name="index_3_title" onChange={this.onChange} ><option value="0">厚度(適用膠帶,綠板,綠紙)</option><option value="1">直徑(適用套管)</option> </select>  </label>
+
+                <div> <select name="index_3_56" id="" onChange={this.onChange}> {index_3_56_head}</select></div>
+                </div>);
             }
 
 
@@ -532,7 +584,7 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
 
 
 
-    console.log(this);
+    
     return (
       <div>
         <div >

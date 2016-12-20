@@ -304,7 +304,7 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
 
     if(e.target.name == "index_type"){
       
-            this.setState({index_type:e.target.value});
+            this.setState({index_type:a});
        
     }
     if(e.target.name == "index_1_color"){
@@ -339,9 +339,11 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
       }
 
     }
-
-
-
+    if( e.target.name == "one_number"){
+      if(parseInt(a) < 10 ){
+       this.setState({ index_9: parseInt(a)%10});
+      }
+    }
     if(e.target.name == "index_1_wire"){
       if(parseInt(a) < 100 ){
 
@@ -351,7 +353,15 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
     if( e.target.name == "four_number"){
 
       if(parseInt(a)<10000){
-        this.setState({ index_6: parseInt(a/1000),index_7: parseInt(a%1000/100),index_8:parseInt(a%1000%100/10),index_9:parseInt(a)%10 })
+        this.setState({ index_6: parseInt(a/1000),index_7: parseInt(a%1000/100),index_8:parseInt(a%1000%100/10),index_9:parseInt(a%10) })
+      }
+    }
+    if(e.target.name== "three_number"){
+      if(parseInt(a)<1000 ){
+
+        this.setState({ index_7:parseInt(a/100),index_8:parseInt(a%100/10),index_9:parseInt(a%10)});
+      }else{
+        this.setState({index_7:0,index_8:0,index_9:0});
       }
     }
 
@@ -359,7 +369,7 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
     if( e.target.name == "wire_thin_4"){
 
       if(parseInt(a)<10000){
-     this.setState({ index_4: parseInt(a/1000),index_5: parseInt(a%1000/100),index_6:parseInt(a%1000%100/10),index_7:parseInt(a)%10 })
+     this.setState({ index_4: parseInt(a/1000),index_5: parseInt(a%1000/100),index_6:parseInt(a%1000%100/10),index_7:parseInt(a%10) })
         }else{
           this.setState({index_4:0,index_5:0,index_6:0,index_7:0});
         }
@@ -377,6 +387,34 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
    if( e.target.name =="index_3_4"){
             this.setState({ index_4:a });
           }
+          // (4)
+
+  if(e.target.name == "index_4_1_456"){  
+    if(a < 1000){
+    this.setState({ index_4 : parseInt(a%1000/100),index_5:parseInt(a%100/10),index_6:parseInt(a%10) });
+        }else{
+    this.setState({ index_4 : 0,index_5:0,index_6:0 });
+        }
+  }
+  if(e.target.name == "index_4_456"){
+    if (a > 99) {
+       this.setState({index_4: parseInt(a/100) ,index_5:parseInt(a%100/10) ,index_6 : parseInt(a%10) }); 
+    }if(a<100){
+      this.setState({ index_4:0 , index_5:parseInt(a/10) ,index_6:parseInt(a%10) });
+    }
+  }
+   if(e.target.name == "index_4_6"){
+    if (a < 100) {
+      this.setState({index_4:parseInt(a/10),index_5:parseInt(a%10)});
+    }
+  }
+   if(e.target.name == "index_4_7"){
+    this.setState({index_6:parseInt(a)});
+  }
+
+
+
+
   }
 
   render() {
@@ -420,10 +458,10 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
                       index_2_1:['種類','線徑','緣厚度與種類','顏色(1碼)','檢查號'],
                       index_3_1:['種類','型態','厚度或直徑','流水編號(3碼)','檢查號'],
                       index_4_1:['種類','鐵芯長','流水編號(3碼)','檢查號'],
-                      index_4_2:['種類','規格','處理','流水編號(3碼)','檢查號'],
+                      index_4_2:['種類','規格(4)','處理','流水編號(3碼)','檢查號'],
                       index_4_3:['種類','材質','處理','流水編號(3碼)','檢查號'],
-                      index_4_4:['種類','矽鋼板(素材)','厚度','流水編號(3碼)','檢查號'],
-                      index_4_5:['種類','矽鋼板(裁切條料)','厚度','流水編號(1碼)','檢查號'],
+                      index_4_4:['種類','矽鋼板(素材)厚度','矽鋼片材質','流水編號(3碼)','檢查號'],
+                      index_4_5:['種類','矽鋼板(裁切條料)厚度','寬度','流水編號(1碼)','檢查號'],
                       index_5_1:['種類','材質','流水編號(4碼)','檢查號'],
                       index_6_1:['種類','型式','流水編號(3碼)','檢查號'],
                       index_7_1:['種類','規格','流水編號(3碼)','檢查號'],
@@ -465,7 +503,14 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
     });
     const index_c_index = _.map(index_c,(v,k)=>{
       return ( <option value={k} key={k} className={style.option}> {v}</option>);
-       } );
+       });
+
+    const index_4_1_456 = ['2.5mm','2.6mm','3.0mm','3.5mm','4.0mm','5.0mm','6.0mm','6#','8#','10#','1/4"','4.5mm','4#','英吋','4.20mm','7.0mm','14.0mm','4.0mm','3.2mm','2.0mm','6.4mm','8.0mm','2#','9.5mm','3.1mm','9.0mm','2.3mm','1.7mm','10mm','15mm','16mm','20mm','12mm','25.4mm','其他'];
+    const index_4_1_456_header = _.map( index_4_1_456,(v,k)=>{
+      return (<option value={k} key={k}>{v}</option>);
+
+    });
+        
     const color_2_index = _.map(color_2,(v,k)=>{
         return (<option value={color_2[k].index} key={k} > {color_2[k].color}</option>);
            });
@@ -475,6 +520,15 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
     const color_1_index = _.map(['BLK (黑)','BWN (棕)','RED (紅)','ORG (橙「金」)','YEL (黃)','GRN (率)','BLU (藍)','VIO (紫)','GRY/SIL(灰「銀)','WHT (白)'],(v,k)=>{
                   return (<option value={k} key={k}> {v} </option>);
                     });
+
+    const index_4_6 = _.map(['冷鋼(SPCC,CRS)','銅、錳 銅 ...','鋁(ALUMINUM)','純鐵(PURE IRON)','銀(SILVER)','鋼鐵(STEEL)','鋅 鐵 板(SECC,SPGC)','塑膠鋼','角鋼、易削鋼、CRS','不銹鋼','其他(材質不清)','Ni-Fe(鎳鐵合金)'],(v,k)=>{
+            return (<option value={k} key={k}> {v} </option>);
+    });
+     const index_4_7 = _.map([ '陽極處理 本色','電鍍五彩(Y)','染黑(B) 鍍黑鋅(B-Zn)','鍍白鋅(BLUE-Zn)(W)','鍍鎳Ni-3','鍍錫(Sn)','烤漆','鍍銀','鍍金(AU)','鍍鉻(本色)'],(v,k)=>{
+            return (<option value={k} key={k}> {v} </option>);
+    });
+
+  
 
     const index_material_spec = ({  index_70_1_000:['AWF','CER','CHIP','CHIP ARRAY','CHIP CER','P A C','CHIP FILM','CHIP NETWORK','CHIP VAR','CONDUCTIVE POLYMER','DISC CER','ELEC.','ELEC. (BR)','ELEC. (NP)','FILM','MEF/MER','MKP','MKT','MOMO CER','MON CER','MONO','MONO CER','MPE/MPP','MPF','MPR','MPT','MPTE','PEI','PEN','POLTPROPYLENE','PP','PPN','PS','PT','SMD ELEC.','SMD ELEC.(NP)','SMD TAN','TAN','THOR CER','VAR','X1','X1/Y1','X1/Y2','X2','X2 MP','X2 MPE','Y','Y1','Y2','EMI FILTER','DISC CER CAP','DISC MPE','FFB','9PIN'],
                                     index_70_1_001:['TRIMMER','HIGH RANGE V.R','MID RANGE V.R','VR','VR ROTARY','VR SMD','VR TRIMMER ','VR TRIMMER SMD','THERMISTOR','THERMISTOR CHIP NTC','THERMISTOR NTC','THERMISTOR POWER','THERMISTOR PTC','THERMISTOR SMD NTC ','MF RS','RS CEMENT','RS CF','RD CHIP 0402','RD CHIP 0603','RD CHIP 0805','RS CHIP 1206/1210','RD CHIP 2512','RD CHIP other','RD CHIP NETWORK','RS CMF','','RS FCC','RS FCR','RS FUSE','RS HV','RS MF','RS MILLI-OHM','RS MOF','RS NETWORK','RS PF','RS PW','RS THERMAL SENSITIVE','RS WW','ACITOR','RS CMP','','','5PIN','TR IMMER','8PIN','7PIN','2,6PIN','9PIN10PIN','16PIN','THERMISTER','14PIN'],
@@ -517,31 +571,18 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
                                     index_90_1_08:['COMPUTER'],
                                     index_90_1_09:['AC/DC','AC/AC'],
                                     index_90_1_12:['組立完成品','零件'],
-                                    index_90_1_23:['緊急ＥＸ','避難EB']
-                                    
-
-
-
-                                    
-
-
-
-
-                                    
-
-                                    
+                                    index_90_1_23:['緊急ＥＸ','避難EB']                                
 
                                     })['index_80_1_21'] || ['12'];
 
-
     const map_index = _.map(index_b, (v,k)=> {   
-            if (v == '流水號碼(1碼)' ) {
-                   return (<div key={k}><label> {v} </label> <input type="number" key={k} maxLength="1" min="0" max="9"/> </div>);
+            if (v == '流水編號(1碼)' ) {
+                   return (<div key={k}><label> {v} </label> <input type="number" key={k} name="one_number" onChange={this.onChange} maxLength="1" min="0" max="9"/> </div>);
             }
             if (v == '流水編號(2碼)' ) {
                    return (<div key={k}><label> {v} </label> <input type="number" name="index_1_wire"  key={k} maxLength="2" min="0" max="99" onChange={this.onChange} /> </div>);
             }if (v == '流水編號(3碼)' ) {
-                   return (<div key={k}><label> {v} </label> <input type="number" key={k} maxLength="3" min="0" max="999"/> </div>);
+                   return (<div key={k}><label> {v} </label> <input type="number" name="three_number" onChange={this.onChange} key={k} maxLength="3" min="0" max="999"/> </div>);
             }if (v == '流水編號(4碼)' ) {
                    return (<div key={k}><label> {v} </label> <input type="number" name="four_number" key={k} maxLength="4" min="0" onChange={this.onChange} max="9999"/> </div>);
             }
@@ -562,7 +603,13 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
               return (<div>{v} <select name="index_2_color" id="" onChange={this.onChange} key={k}> {color_1_index} </select> </div>);
             }if(v == '線徑' ){
               return (<div><label> {v} </label> <input name="wire_thin_4" type="number" min="1" max="9999" maxLength="4" onChange={this.onChange} key={k}/></div>);
-            }if(v == '緣厚度與種類' ){
+            }if(v == '鐵芯長'){
+              return (<div><label> {v} </label> <input name="index_4_1_456" type="number" min="1" max="999" maxLength="3" onChange={this.onChange} key={k}/></div>);
+            }
+
+
+
+            if(v == '緣厚度與種類' ){
               return (<div><label> {v} </label> <select name="index_2_thin" id="" onChange={this.onChange}> {width_2_index} </select></div>);
             }if(v == '型態' ){
               return (<div><label> {v} </label> <select onChange={this.onChange} name="index_3_4" id=""> {_.map( ['整卷','整卷沖孔','切斷','切斷衝製'],(v,k)=>{ return (<option value={k} key={k}>{v}</option>)})} </select></div>);
@@ -571,7 +618,17 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
 
                 <div> <select name="index_3_56" id="" onChange={this.onChange}> {index_3_56_head}</select></div>
                 </div>);
+            }if(v == '規格(4)'){
+               return (<div> <label for=""> {v} </label> <select name="index_4_456" id="" onChange={this.onChange}> {index_4_1_456_header} </select> </div>);
+            }if(v == '材質'){
+             return (<div>{v} <select name="index_4_6" id="" onChange={this.onChange} key={k}>{index_4_6} </select> </div>);
+            }if(v == '處理'){
+             return (<div>{v} <select name="index_4_7" id="" onChange={this.onChange} key={k}>{index_4_7} </select> </div>);
+            } if (v == '矽鋼板(素材)') {
+             
+
             }
+
 
 
 

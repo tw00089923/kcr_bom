@@ -143,6 +143,7 @@ import { Link } from 'react-router';
 import Select from 'react-select';
 import react_select_css from 'react-select/dist/react-select.css';
 import XLSX from 'xlsx';
+import Tip from './Tip';
 
 
 export default class Bom extends React.Component {
@@ -304,7 +305,14 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
 
     if(e.target.name == "index_type"){
       
-            this.setState({index_type:a});
+      if(this.state.index_1 = 4){
+      
+        this.setState({index_type:a});
+    
+      }else{
+
+        this.setState({index_type:a});
+      }
        
     }
     if(e.target.name == "index_1_color"){
@@ -322,8 +330,18 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
 
 
     if(e.target.name == "index_2"){
+       
       if ( a < 9){
-      this.setState({ index_2:0,index_3:a});
+      
+
+        
+
+
+
+           this.setState({ index_2:0,index_3:a});
+   
+        }
+     
       }if( a > 10 ){
         this.setState({ index_2:e.target.value.substring(0,1),index_3:e.target.value.substring(1,2) });
       }if( a == 23){
@@ -331,7 +349,7 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
       }if (a == 24) { 
         this.setState({index_2:9,index_3:9});
       }
-    }
+    
     if( e.target.name == "index_1_number"){
       if (a < 100 ) {
      
@@ -460,8 +478,8 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
                       index_4_1:['種類','鐵芯長','流水編號(3碼)','檢查號'],
                       index_4_2:['種類','規格(4)','處理','流水編號(3碼)','檢查號'],
                       index_4_3:['種類','材質','處理','流水編號(3碼)','檢查號'],
-                      index_4_4:['種類','矽鋼板(素材)厚度','矽鋼片材質','流水編號(3碼)','檢查號'],
-                      index_4_5:['種類','矽鋼板(裁切條料)厚度','寬度','流水編號(1碼)','檢查號'],
+                      index_4_4:['鐵芯(素材)','矽鋼板(素材)厚度','矽鋼片材質','流水編號(3碼)','檢查號'],
+                      index_4_5:['鐵芯(裁切條料)','矽鋼板(裁切條料)厚度','寬度','流水編號(1碼)','檢查號'],
                       index_5_1:['種類','材質','流水編號(4碼)','檢查號'],
                       index_6_1:['種類','型式','流水編號(3碼)','檢查號'],
                       index_7_1:['種類','規格','流水編號(3碼)','檢查號'],
@@ -624,9 +642,13 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
              return (<div>{v} <select name="index_4_6" id="" onChange={this.onChange} key={k}>{index_4_6} </select> </div>);
             }if(v == '處理'){
              return (<div>{v} <select name="index_4_7" id="" onChange={this.onChange} key={k}>{index_4_7} </select> </div>);
-            } if (v == '矽鋼板(素材)') {
-             
+            } if (v == '鐵芯(素材)') {
+            return (<div>{v} <select name=" " id="" onChange={this.onChange} key={k}>  <option value="00"> 選擇 </option>  <option value="64"> 鐵芯(預設值:64) </option></select> </div>);
 
+            }if (v == '矽鋼板(素材)厚度') {
+            return (<div>{v}<input name=" " type="number" min="1" max="99" maxLength="2" onChange={this.onChange} key={k}/> </div>);
+            }if (v == '矽鋼板(裁切條料)厚度') {
+            return (<div>{v}<input name=" " type="number" min="1" max="99" maxLength="2" onChange={this.onChange} key={k}/> </div>);
             }
 
 
@@ -681,13 +703,18 @@ console.log(XLSX.writeFile(wb, 'test.xlsx'));
           <button className={style.btn_save} onClick={this.local}> start </button>
           <button className={style.btn_save} onClick={this.save}> Save </button>
         {this.state.index_1}{this.state.index_2}{this.state.index_3}{this.state.index_4}{this.state.index_5}{this.state.index_6}{this.state.index_7}{this.state.index_8}{this.state.index_9}{this.state.index_0}
+      
+        <div className={style.foot_tip}> 
+          <label> 編料提示: </label> 
+          <Tip content="123" />
+
+        </div>
       </div>
+      
       </div>
 
     );
   }
 }
-
-
 
 

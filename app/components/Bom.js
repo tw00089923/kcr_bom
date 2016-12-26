@@ -191,29 +191,50 @@ read(){
       let files = fs.readdirSync(url);
       let fullname =[];
       let local = window.location.pathname;
-      let localurl = local.substring(0,local.lastIndexOf('/')+1);
- 
-      console.log(fullname);
-      
+      let localurl = local.substring(0,local.lastIndexOf('/')+1)+url.substring(6,url.length);
+      console.log(localurl);
       files.forEach(function (filename) {
-       fullname.push(path.join(localurl,filename));
+       fullname.push(path.join(url,filename));
       });
 
       return fullname;
   }
-
+  
    const url = readdir(`./app/excel/export/${this.state.index_1}`);
 
 
   console.log(url);
 
 
-   // const a = document.createElement("a");
-   // a.href = url[0];
-   // a.setAttribute('download', url[0].substring(url[0].lastIndexOf('/')+1));
-   // a.setAttribute('target', '_blank');
-   // a.click();
+  //  const a = document.createElement("a");
+  //  a.href = url[0];
+  //  a.setAttribute('download', url[0].substring(url[0].lastIndexOf('/')+1));
+  //  a.setAttribute('target', '_blank');
+  //  a.click();
 
+
+   
+    var oReq = new XMLHttpRequest();
+    oReq.open("GET",'excel/export/1/DOC052-1 料號申請單-電線電纜類-OK.xls', true);
+    oReq.responseType = "arraybuffer";
+
+    oReq.onload = function(e) {
+      var arraybuffer = oReq.response;
+
+      /* convert data to binary string */
+      var data = new Uint8Array(arraybuffer);
+      var arr = new Array();
+      for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+      var bstr = arr.join("");
+
+      /* Call XLSX */
+      var workbook = XLSX.read(bstr, {type:"binary"});
+      console.log(workbook);
+      /* DO SOMETHING WITH workbook HERE */
+    }
+
+    oReq.send();
+ 
 
 
 }

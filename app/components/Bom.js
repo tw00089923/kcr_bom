@@ -165,7 +165,8 @@ export default class Bom extends React.Component {
       index_8: 0,
       index_9: 0,
       index_0: 0,
-      error:{}
+      error:{},
+      download : 0
     };
        this.onChange = this.onChange.bind(this);
        this.onClick = this.onClick.bind(this);
@@ -190,11 +191,14 @@ read(){
       let path = require('path');
       let files = fs.readdirSync(url);
       let fullname =[];
-      let local = window.location.pathname;
-      let localurl = local.substring(0,local.lastIndexOf('/')+1)+url.substring(6,url.length);
-      console.log(localurl);
+      // let local = window.location.pathname;
+      // let localurl = local.substring(0,local.lastIndexOf('/')+1);
+
+      //      let localurl = local.substring(0,local.lastIndexOf('/')+1)+url.substring(6,url.length);
+     
+      
       files.forEach(function (filename) {
-       fullname.push(path.join(url,filename));
+       fullname.push(path.join(url.substring(6,url.length),filename));
       });
 
       return fullname;
@@ -206,34 +210,48 @@ read(){
   console.log(url);
 
 
-  //  const a = document.createElement("a");
-  //  a.href = url[0];
-  //  a.setAttribute('download', url[0].substring(url[0].lastIndexOf('/')+1));
-  //  a.setAttribute('target', '_blank');
-  //  a.click();
+   const a = document.createElement("a");
+   a.href = url[this.state.download];
+   a.setAttribute('download', url[this.state.download].substring(url[this.state.download].lastIndexOf('/')+1));
+   a.setAttribute('target', '_blank');
+   a.click();
 
 
    
-    var oReq = new XMLHttpRequest();
-    oReq.open("GET",'excel/export/1/DOC052-1 料號申請單-電線電纜類-OK.xls', true);
-    oReq.responseType = "arraybuffer";
+    // var oReq = new XMLHttpRequest();
+    // oReq.open("GET",url[0], true);
+    // oReq.responseType = "arraybuffer";
 
-    oReq.onload = function(e) {
-      var arraybuffer = oReq.response;
+    // oReq.onload = function(e) {
+    //   var arraybuffer = oReq.response;
 
-      /* convert data to binary string */
-      var data = new Uint8Array(arraybuffer);
-      var arr = new Array();
-      for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-      var bstr = arr.join("");
+    //   /* convert data to binary string */
+    //   var data = new Uint8Array(arraybuffer);
+    //   var arr = new Array();
+    //   for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+    //   var bstr = arr.join("");
 
-      /* Call XLSX */
-      var workbook = XLSX.read(bstr, {type:"binary"});
-      console.log(workbook);
-      /* DO SOMETHING WITH workbook HERE */
-    }
+    //   /* Call XLSX */
+    //   const workbook = XLSX.read(bstr, {type:"binary"});
+    //   console.log(workbook);
+    //   /* DO SOMETHING WITH workbook HERE */
 
-    oReq.send();
+
+
+
+
+
+
+
+    // }
+
+    // oReq.send();
+
+  //可以創建一個url下載 重整後消失
+  // const objectURL = URL.createObjectURL(workbook);
+
+
+
  
 
 
@@ -310,17 +328,17 @@ save(){
 
       if(a < 9 ){
           // this.setState({index_1:a,index_2:0,index_type:1 ,index_3:0,index_4:0}); 
-          this.setState(Object.assign({index_1:a,index_2:0,index_type:1}, c)) ;
+          this.setState(Object.assign({index_1:a,index_2:0,index_type:1 ,download:0}, c)) ;
         }
       if(a == 9 ){
           // this.setState({index_1:a ,index_2:2});
-          this.setState(Object.assign({index_1:a,index_2:2}, c)) ;
+          this.setState(Object.assign({index_1:a,index_2:2 ,download:0}, c)) ;
         }
       if(a == 10){
 
           // this.setState({index_1:9,index_2:0,index_type:1});
 
-           this.setState(Object.assign({index_1:9,index_2:0,index_type:1}, c)) ;
+           this.setState(Object.assign({index_1:9,index_2:0,index_type:1,download:0}, c)) ;
         }
     
 
@@ -589,12 +607,20 @@ save(){
 
 
   }
+  download(e){
+    let b = e.target.name;
+    let a = e.target.value;
+
+    this.setState({ download: a });
+    console.log(this.state.download);
+  }
 
 
   onChange_number(e){
 
     let a = e.target.value;
    if( e.target.name == "one_number"){
+
       if(parseInt(a) < 10 ){
        this.setState({ index_9: parseInt(a)%10});
       }else{
@@ -1003,8 +1029,16 @@ save(){
               }
             });
 
+     const getfilename = (url)=>{
+      let fs = require('fs');
+      let files = fs.readdirSync(url);
+      return files;
+     };
 
 
+    const getfilename_a = getfilename(`./app/excel/export/${this.state.index_1}`) || ['no'];
+    const array1 = _.values(getfilename_a);
+    console.log(array1);
 
     
     return (
@@ -1042,10 +1076,10 @@ save(){
             
           </div>
          
-          
+          <Select options={array1} processes="excel 下載" name="download" onChange={this.download.bind(this)} />
           <button className={style.btn_save} onClick={this.read.bind(this)}> Read </button>
           <button className={style.btn_save} onClick={this.local}> 點擊取得[.xlsx]</button>
-          <button className={style.btn_save} onClick={this.save}> Save </button>
+          <button className={style.btn_save} onClick={this.save}> Save </button>  
         {this.state.index_1}{this.state.index_2}{this.state.index_3}{this.state.index_4}{this.state.index_5}{this.state.index_6}{this.state.index_7}{this.state.index_8}{this.state.index_9}{this.state.index_0}
       
         <div className={style.foot_tip}> 

@@ -924,7 +924,11 @@ save(){
             if (v == '檢查號' ) {
                    return (<div key={k}><label> {v} </label> <input type="number" key={k} value="0" min="0" max="9"/> </div>);
             }if(v == '種類' ){
-              return (<div>{v} <select name="index_2" id="" onChange={this.onChange} className={style.select} key={k}> {index_c_index} </select> </div>);
+
+              // return (<Select options={index_c_index} processes={v} name="index_2" onChange={this.onChange} key={k} />);
+
+
+             return (<div>{v} <select name="index_2" id="" onChange={this.onChange} className={style.select} key={k}> {index_c_index} </select> </div>);
             }if(v == '工程別' ){
               return (<div>{v} <select name="index_92_1" id="" onChange={this.onChange_index_92} key={k}> {index_c_index} </select> </div>);
             }if(v == '顏色(2碼)' ){
@@ -1062,9 +1066,7 @@ save(){
 
           
 
-           <div className={style.material_header}>  {material_header_show} &nbsp; &nbsp; 
-            
-           
+           <div className={style.material_header}>  {material_header_show} &nbsp; &nbsp;        
            <select name="index_type" id="" onChange={this.onChange} className={style.select} > {index_type_index}</select>
            </div> 
           </div>
@@ -1077,16 +1079,17 @@ save(){
           </div>
          
           <Select options={array1} processes="excel 下載" name="download" onChange={this.download.bind(this)} />
-          <button className={style.btn_save} onClick={this.read.bind(this)}> Read </button>
-          <button className={style.btn_save} onClick={this.local}> 點擊取得[.xlsx]</button>
-          <button className={style.btn_save} onClick={this.save}> Save </button>  
+          <button className={style.btn_save} onClick={this.read.bind(this)}><i className="fa fa-download" aria-hidden="true"></i> download </button>
+          
+      
         {this.state.index_1}{this.state.index_2}{this.state.index_3}{this.state.index_4}{this.state.index_5}{this.state.index_6}{this.state.index_7}{this.state.index_8}{this.state.index_9}{this.state.index_0}
       
-        <div className={style.foot_tip}> 
+       {/*   <div className={style.foot_tip}> 
           <label> 編料提示: </label> 
           <Tip content={this.state.index_1.toString()+this.state.index_2.toString()} />
 
         </div>
+        */}
       </div>
       
       </div>

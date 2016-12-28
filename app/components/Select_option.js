@@ -16,8 +16,8 @@ export default class Select_option extends React.Component {
     return (
       <div>
 
-      	{processes}
-        
+      	  <div style={{"width":"100%"}}> {processes} </div>
+
       	 <select name={name} id={id} onChange={onChange} key={key}>  
       	
       		{header}

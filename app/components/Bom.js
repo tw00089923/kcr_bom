@@ -427,10 +427,9 @@ save(){
     let a = e.target.value;
    if(e.target.name =="index_1_number"){
       this.setState({ index_4 : parseInt(a%100/10),index_5:parseInt(a%10) });
-
-
-
-   }
+   } if(e.target.name =="index_2_color") {
+      this.setState({ index_9 : parseInt(a)});
+     }
 
 
   }
@@ -772,6 +771,7 @@ save(){
     const color_1_index = _.map(['BLK (黑)','BWN (棕)','RED (紅)','ORG (橙「金」)','YEL (黃)','GRN (率)','BLU (藍)','VIO (紫)','GRY/SIL(灰「銀)','WHT (白)'],(v,k)=>{
                   return (<option value={k} key={k}> {v} </option>);
                     });
+    const color_1 = ['BLK (黑)','BWN (棕)','RED (紅)','ORG (橙「金」)','YEL (黃)','GRN (率)','BLU (藍)','VIO (紫)','GRY/SIL(灰「銀)','WHT (白)'];
     const index_4_6_header = ['冷鋼(SPCC,CRS)','銅、錳 銅 ...','鋁(ALUMINUM)','純鐵(PURE IRON)','銀(SILVER)','鋼鐵(STEEL)','鋅 鐵 板(SECC,SPGC)','塑膠鋼','角鋼、易削鋼、CRS','不銹鋼','其他(材質不清)','Ni-Fe(鎳鐵合金)'];
     const index_4_6 = _.map(['冷鋼(SPCC,CRS)','銅、錳 銅 ...','鋁(ALUMINUM)','純鐵(PURE IRON)','銀(SILVER)','鋼鐵(STEEL)','鋅 鐵 板(SECC,SPGC)','塑膠鋼','角鋼、易削鋼、CRS','不銹鋼','其他(材質不清)','Ni-Fe(鎳鐵合金)'],(v,k)=>{
             return (<option value={k} key={k}> {v} </option>);
@@ -801,7 +801,7 @@ save(){
               index_6_1_0:['鐵皮','鐵扣','PALLET棧板','FRAME 鐵框'],
               index_6_1_1:['pp打包帶'],
               index_6_1_2:['角狀類','','','長方形']
-    })[`index_${this.state.index_1}_${this.state.index_2}_${this.state.index_3}`]||['預設值'];
+         })[`index_${this.state.index_1}_${this.state.index_2}_${this.state.index_3}`]||['預設值'];
 
 
     const index_7 =({
@@ -814,10 +814,7 @@ save(){
                                     index_7_0_6:['V.S','E','R','K','G','J','Z','1','M','S','ST','TI','T','C','V','P','2','H','F','B','3'],
                                     index_7_0_7:['10A','8A','25A','1A'],
                                     index_7_0_8:['P.T','AUDIO','C.V.T','CHOKE','CURRENT','INDUCTOR','PLUSE','FLYBACK','ADAPTOR','WINDING SUB']
-
-
-
-      })[`index_${this.state.index_1}_${this.state.index_3}_${this.state.index_4}`] ||['預設值'];
+        })[`index_${this.state.index_1}_${this.state.index_3}_${this.state.index_4}`] ||['預設值'];
 
       const index_7_1 = ['CAPACITOR','RESISTOR、THERMISTOR、TRIMMER','DIODE、TVS、SCR、DIAC、TRIAC、RECTIFIER','IC、PHOTO COUPLER','TRANSISTOR','LED','VARISTOR、V.R(VARIABLE)','RECTIFIER (改使用002)','TRANSFORMER、INDUCTOR','IFT','L.C.D','EMI/LC FILTER','OSCILLATOR CRYSTAL','INTER MEDIATE FREQUENCY','其他歸至8089','ABSORBER','SENSOR'];
 
@@ -922,19 +919,12 @@ save(){
                                     })['index_80_1_21'] || ['12'];
 
     const map_index = _.map(index_b, (v,k)=> {   
-            if (v == '流水編號(1碼)' ) {
-                   return (<div key={k}><label> {v} </label> <input type="number" key={k} name="one_number" onChange={this.onChange_number} maxLength="1" min="0" max="9"/> </div>);
-            }
-            if (v == '流水編號(2碼)' ) {
-                   return (<div key={k}><label> {v} </label> <input type="number" name="two_number"  key={k} maxLength="2" min="0" max="99" onChange={this.onChange_number} /> </div>);
-            }if (v == '流水編號(3碼)' ) {
-                   return (<div key={k}><label> {v} </label> <input type="number" name="three_number" onChange={this.onChange_number} key={k} maxLength="3" min="0" max="999"/> </div>);
-            }if (v == '流水編號(4碼)' ) {
-                   return (<div key={k}><label> {v} </label> <input type="number" name="four_number" key={k} maxLength="4" min="0" onChange={this.onChange_number} max="9999"/> </div>);
-            }
-            if (v == '號數' ) {
-                   return (<div key={k}><label> {v} </label> <input name="index_1_number" onChange={this.onChange_index_2.bind(this)} type="number" min="1" max="99" key={k}/> </div>);
-            }
+            if (v == '流水編號(1碼)' ) return (<div key={k}><label> {v} </label> <input type="number" key={k} name="one_number" onChange={this.onChange_number} maxLength="1" min="0" max="9"/> </div>);
+            
+            if (v == '流水編號(2碼)' ) return (<div key={k}><label> {v} </label> <input type="number" name="two_number"  key={k} maxLength="2" min="0" max="99" onChange={this.onChange_number} /> </div>);
+            if (v == '流水編號(3碼)' ) return (<div key={k}><label> {v} </label> <input type="number" name="three_number" onChange={this.onChange_number} key={k} maxLength="3" min="0" max="999"/> </div>);
+            if (v == '流水編號(4碼)' ) return (<div key={k}><label> {v} </label> <input type="number" name="four_number" key={k} maxLength="4" min="0" onChange={this.onChange_number} max="9999"/> </div>);
+            if (v == '號數' ) return (<div key={k}><label> {v} </label> <input name="index_1_number" onChange={this.onChange_index_2.bind(this)} type="number" min="1" max="99" key={k}/> </div>);
             if (v == '檢查號' ) {
                    return (<div key={k}><label> {v} </label> <input type="number" key={k} value="0" min="0" max="9"/> </div>);
             }if(v == '種類' ){
@@ -948,7 +938,10 @@ save(){
             }if(v == '顏色(2碼)' ){
               return (<div className={style.select}>{v} <select name="index_1_color" id=""  onChange={this.onChange} key={k}  > {color_2_index} </select> </div>);
             }if(v == '顏色(1碼)' ){
-              return (<div>{v} <select name="index_2_color" id="" onChange={this.onChange} key={k}> {color_1_index} </select> </div>);
+
+
+              return (<Select options={color_1} processes={v} name="index_2_color" onChange={this.onChange_index_2.bind(this)}></Select> );
+              // return (<div>{v} <select name="index_2_color" id="" onChange={this.onChange} key={k}> {color_1_index} </select> </div>);
             }if(v == '線徑' ){
               return (<div><label> {v} </label> <input name="wire_thin_4" type="number" min="1" max="9999" maxLength="4" onChange={this.onChange} key={k}/></div>);
             }if(v == '鐵芯長'){
@@ -993,49 +986,25 @@ save(){
             // return (<div>{v} <select name="index_4_4_material" id="" onChange={this.onChange_index_4} key={k}>{index_4_6} </select> </div>);
               return ( <Select options={index_4_6_header} processes={v} name="index_4_4_material" onChange={this.onChange_index_4} />);
             }
-            if (v == '種類[塑膠化學]') {
-
-            return (<Select options={index_5} processes={v} name="index_5_1" onChange={this.onChange_index_5} />);
-            }
-            if(v == '材質[塑膠化學]'){
-              return (<Select options={index_5_material} processes={v} name="index_5_material" onChange={this.onChange_index_5} />);
-            }if(v == '包材型式'){
-              return (<Select options={index_6} processes={v} name="index_6" onChange={this.onChange_index_6} />);
-            }if(v == '電子元件材質'){
-              return (<Select options={index_7} processes={v} name="index_7" onChange={this.onChange_index_7} />);
-            }if(v == '電子種類'){
-              return (<Select options={index_7_1} processes={v} name="index_7_1" onChange={this.onChange_index_7} />);
-            }if(v == '電子配件種類'){
-              return (<Select options={index_8_header} processes={v} name="index_8_1" onChange={this.onChange_index_8} />);
-            }
-
-            if (v == '電子配件規格') {
-              return (<Select options={index_8_1} processes={v} name="index_8_2" onChange={this.onChange_index_8} />);
-            }if(v == '機種簡稱' ){
-              return (<Select options={index_92_2} processes={v} name="index_92_2" onChange={this.onChange_index_92} />);
-
-            }if(v == '機種簡稱' ){
-              return (<Select options={index_92_2} processes={v} name="index_92_2" onChange={this.onChange_index_92} />);
-
-            }if(v == '條料寬度'){
-              return (<div><label> {v} </label> <input name="index_92_3" type="number" min="1" max="999" maxLength="3" onChange={this.onChange_index_92} key={k} /></div>);
-            }if(v == '矽鋼片(條料)'){
-              return (<Select options={index_92_4} processes={v} name="index_92_4" onChange={this.onChange_index_92} />);
-            }if(v == '鐵芯(沖製品及未燒炖N品)'){
-              return (<Select options={index_92_5} processes={v} name="index_92_5" onChange={this.onChange_index_92} />);
-            }if(v == 'EI鐵芯(沖製品及燒炖A品)'){
-              return (<Select options={index_92_6} processes={v} name="index_92_6" onChange={this.onChange_index_92} />);
-            }if(v == '(92)鐵芯長'){
-              return (<div><label> {v} </label> <input name="index_92_7" type="number" min="1" max="999" maxLength="3" onChange={this.onChange_index_92} key={k} /></div>);
-            }if(v == 'CHRONOIII類別'){
-              return (<Select options={index_92_8} processes={v} name="index_92_8" onChange={this.onChange_index_92} />);
-            }if(v == 'CHRONOIII'){
-              return (<Select options={index_92_III} processes={v} name="index_92_9" onChange={this.onChange_index_92} />);
-            }if(v == '成品類別'){
-              return (<Select options={index_90_1} processes={v} name="index_90_1" onChange={this.onChange_index_90} />);
-            }if(v == '成品型式'){
-              return (<Select options={index_90_2} processes={v} name="index_90_2" onChange={this.onChange_index_90} />);
-            }
+            if (v == '種類[塑膠化學]')return (<Select options={index_5} processes={v} name="index_5_1" onChange={this.onChange_index_5} />);
+            if(v == '材質[塑膠化學]')return (<Select options={index_5_material} processes={v} name="index_5_material" onChange={this.onChange_index_5} />);
+            if(v == '包材型式')return (<Select options={index_6} processes={v} name="index_6" onChange={this.onChange_index_6} />);
+            if(v == '電子元件材質')return (<Select options={index_7} processes={v} name="index_7" onChange={this.onChange_index_7} />);
+            if(v == '電子種類')return (<Select options={index_7_1} processes={v} name="index_7_1" onChange={this.onChange_index_7} />);
+            if(v == '電子配件種類')return (<Select options={index_8_header} processes={v} name="index_8_1" onChange={this.onChange_index_8} />);
+            if (v == '電子配件規格')return (<Select options={index_8_1} processes={v} name="index_8_2" onChange={this.onChange_index_8} />);
+            if(v == '機種簡稱' )return (<Select options={index_92_2} processes={v} name="index_92_2" onChange={this.onChange_index_92} />);
+            if(v == '機種簡稱')return (<Select options={index_92_2} processes={v} name="index_92_2" onChange={this.onChange_index_92} />);
+            if(v == '條料寬度')return (<div><label> {v} </label> <input name="index_92_3" type="number" min="1" max="999" maxLength="3" onChange={this.onChange_index_92} key={k} /></div>);
+            if(v == '矽鋼片(條料)')return (<Select options={index_92_4} processes={v} name="index_92_4" onChange={this.onChange_index_92} />);
+            if(v == '鐵芯(沖製品及未燒炖N品)')return (<Select options={index_92_5} processes={v} name="index_92_5" onChange={this.onChange_index_92} />);
+            if(v == 'EI鐵芯(沖製品及燒炖A品)') return (<Select options={index_92_6} processes={v} name="index_92_6" onChange={this.onChange_index_92} />);
+            if(v == '(92)鐵芯長')return (<div><label> {v} </label> <input name="index_92_7" type="number" min="1" max="999" maxLength="3" onChange={this.onChange_index_92} key={k} /></div>);
+            if(v == 'CHRONOIII類別')return (<Select options={index_92_8} processes={v} name="index_92_8" onChange={this.onChange_index_92} />);
+            if(v == 'CHRONOIII')return (<Select options={index_92_III} processes={v} name="index_92_9" onChange={this.onChange_index_92} />);
+            if(v == '成品類別')return (<Select options={index_90_1} processes={v} name="index_90_1" onChange={this.onChange_index_90} />);
+            if(v == '成品型式')return (<Select options={index_90_2} processes={v} name="index_90_2" onChange={this.onChange_index_90} />);
+            
 
 
 

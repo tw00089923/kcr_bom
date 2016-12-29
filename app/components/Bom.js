@@ -421,6 +421,20 @@ save(){
 
   }
 
+
+  onChange_index_2(e){
+
+    let a = e.target.value;
+   if(e.target.name =="index_1_number"){
+      this.setState({ index_4 : parseInt(a%100/10),index_5:parseInt(a%10) });
+
+
+
+   }
+
+
+  }
+
   onChange_index_4(e){
 
      let a = e.target.value;
@@ -919,7 +933,7 @@ save(){
                    return (<div key={k}><label> {v} </label> <input type="number" name="four_number" key={k} maxLength="4" min="0" onChange={this.onChange_number} max="9999"/> </div>);
             }
             if (v == '號數' ) {
-                   return (<div key={k}><label> {v} </label> <input name="index_1_number" onChange={this.onChange} type="number" min="1" max="99" key={k}/> </div>);
+                   return (<div key={k}><label> {v} </label> <input name="index_1_number" onChange={this.onChange_index_2.bind(this)} type="number" min="1" max="99" key={k}/> </div>);
             }
             if (v == '檢查號' ) {
                    return (<div key={k}><label> {v} </label> <input type="number" key={k} value="0" min="0" max="9"/> </div>);
@@ -928,7 +942,7 @@ save(){
               // return (<Select options={index_c_index} processes={v} name="index_2" onChange={this.onChange} key={k} />);
 
 
-             return (<div>{v} <select name="index_2" id="" onChange={this.onChange} className={style.select} key={k}> {index_c_index} </select> </div>);
+             return (<div >{v} <select name="index_2" id="" onChange={this.onChange}  key={k}> {index_c_index} </select> </div>);
             }if(v == '工程別' ){
               return (<div>{v} <select name="index_92_1" id="" onChange={this.onChange_index_92} key={k}> {index_c_index} </select> </div>);
             }if(v == '顏色(2碼)' ){
